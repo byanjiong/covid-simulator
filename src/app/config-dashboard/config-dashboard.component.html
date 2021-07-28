@@ -1,0 +1,245 @@
+<form [formGroup]="cfgf.configForm" class="flexWrap flexGrow denser" (ngSubmit)="onSubmit()" novalidate>
+
+    <div class="flexWrap flexGrow">
+        <button type="button" class="flexNone flexGap" color="primary" mat-raised-button (click)="onStart()" [disabled]="! isStop">Start <mat-icon>arrow_right</mat-icon></button>
+        <button type="button" class="flexNone flexGap" color="accent" mat-raised-button (click)="onStop()" [disabled]="isStop">Stop</button>
+        <mat-divider class="flexGap" [vertical]="true"></mat-divider>
+        <!-- <button type="button" class="flexNone flexGap" mat-stroked-button (click)="onSave()">Save</button> -->
+        <button type="button" class="flexNone flexGap" mat-stroked-button [matMenuTriggerFor]="presetMenu">Preset <mat-icon>expand_more</mat-icon></button>
+        <mat-menu #presetMenu="matMenu">
+            <ng-container *ngFor="let prst of prs.preset">
+                <button mat-menu-item (click)="applyPresetConfig(prst.config)">{{ prst.name }}</button>
+            </ng-container>
+            
+            
+          </mat-menu>
+          
+        <button type="button" class="flexNone flexGap" mat-stroked-button (click)="onNew()">New</button>
+        <div class="flexAuto"></div>
+        <button type="button" class="flexNone" mat-stroked-button (click)="openDialog()"><mat-icon>info</mat-icon></button>
+        <div class="flexWrap flexGrow"></div>
+    </div>
+
+
+    <div class="flexWrap flexGrow padMd">
+        <mat-list dense class="flexMd">
+            <h3 matSubheader>Display</h3>
+            <mat-list-item (click)="showConfig('row')" [ngClass]="{active: currentConfig === 'row'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Row</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.row }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('column')" [ngClass]="{active: currentConfig === 'column'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Column</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.column }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('symbolSize')" [ngClass]="{active: currentConfig === 'symbolSize'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Symbol</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.symbolSize }}</div>
+                </div>
+            </mat-list-item>
+            <!-- <mat-list-item (click)="showConfig('padding')" [ngClass]="{active: currentConfig === 'padding'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Symbol padding</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.padding }}</div>
+                </div>
+            </mat-list-item> -->
+            <mat-list-item (click)="showConfig('animationSpeed')" [ngClass]="{active: currentConfig === 'animationSpeed'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Animation delay</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.animationSpeed }}</div>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    
+        <mat-list dense class="flexMd padMd">
+            <h3 matSubheader>Population</h3>
+            <mat-list-item (click)="showConfig('populationDensity')" [ngClass]="{active: currentConfig === 'populationDensity'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Population density</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.populationDensity }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('initialInfectionRate')" [ngClass]="{active: currentConfig === 'initialInfectionRate'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Initial infection rate</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.initialInfectionRate }}</div>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    
+        <mat-list dense class="flexMd padMd">
+            <h3 matSubheader>Disease</h3>
+            <mat-list-item (click)="showConfig('infectionRate')" [ngClass]="{active: currentConfig === 'infectionRate'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Infection rate</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.infectionRate }}</div>
+                </div>
+            </mat-list-item>
+            <!-- <mat-list-item (click)="showConfig('recoverRate')"  [ngClass]="{active: currentConfig === 'recoverRate'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Recovery rate</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.recoverRate }}</div>
+                </div>
+            </mat-list-item> -->
+        </mat-list>
+
+        <mat-list dense class="flexMd padMd">
+            <h3 matSubheader>Intervention</h3>
+            <mat-list-item (click)="showConfig('region')" [ngClass]="{active: currentConfig === 'region'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">#Region</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.region }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('quarantineStrictness')" [ngClass]="{active: currentConfig === 'quarantineStrictness'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Quarantine</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.quarantineStrictness }}</div>
+                </div>
+            </mat-list-item>
+
+            <mat-list-item (click)="showConfig('vaccinationRate')" [ngClass]="{active: currentConfig === 'vaccinationRate'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Vaccination rate</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.vaccinationRate }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('vaccineEfficacy')" [ngClass]="{active: currentConfig === 'vaccineEfficacy'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Vaccine efficacy</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.vaccineEfficacy | percent }}</div>
+                </div>
+            </mat-list-item>
+
+            <mat-list-item (click)="showConfig('testingRate')" [ngClass]="{active: currentConfig === 'testingRate'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Testing rate</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.testingRate }}</div>
+                </div>
+            </mat-list-item>
+
+        </mat-list>
+
+
+        <mat-list dense class="flexMd padMd">
+            <h3 matSubheader>Display</h3>
+            <mat-list-item (click)="showConfig('displayAll')" [ngClass]="{active: currentConfig === 'displayAll'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Unknown</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.displayAll? '✓':'✕' }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('displayVaccinated')" [ngClass]="{active: currentConfig === 'displayVaccinated'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Vaccinated</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.displayVaccinated? '✓':'✕' }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('displayLock')" [ngClass]="{active: currentConfig === 'displayLock'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Lockdown</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.displayLock? '✓':'✕' }}</div>
+                </div>
+            </mat-list-item>
+            <mat-list-item (click)="showConfig('displayGrid')" [ngClass]="{active: currentConfig === 'displayGrid'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Grid</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.displayGrid? '✓':'✕' }}</div>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </div>
+
+    <mat-divider class="flexGrow"></mat-divider>
+
+    <div class="flexWrap flexGrow justifyCenter backgroundAnimated" *ngIf="currentConfig !== ''">
+        <div class="flexWrap flexMat2x justifyCenter padMd">
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'row'"
+                [max]="200" [min]="5" [step]="1" [thumbLabel]="true" formControlName="row">
+            </mat-slider>
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'column'"
+                [max]="200" [min]="5" [step]="1" [thumbLabel]="true" formControlName="column">
+            </mat-slider>
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'symbolSize'"
+                [max]="50" [min]="6" [step]="2" [thumbLabel]="true" formControlName="symbolSize">
+            </mat-slider>
+            <!-- <mat-slider class="flexGrow" *ngIf="currentConfig === 'padding'"
+                [max]="10" [min]="2" [step]="1" [thumbLabel]="true" formControlName="padding">
+            </mat-slider> -->
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'animationSpeed'"
+                [max]="500" [min]="0" [step]="10" [thumbLabel]="true" formControlName="animationSpeed">
+            </mat-slider>
+    
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'populationDensity'"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="populationDensity">
+            </mat-slider>
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'initialInfectionRate'"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="initialInfectionRate">
+            </mat-slider>
+        
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'infectionRate'"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="infectionRate">
+            </mat-slider>
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'recoverRate'"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="recoverRate">
+            </mat-slider>
+    
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'region'"
+                [max]="6" [min]="1" [step]="1" [thumbLabel]="true" formControlName="region">
+            </mat-slider>
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'quarantineStrictness'"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="quarantineStrictness">
+            </mat-slider>
+    
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'vaccinationRate'"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="vaccinationRate">
+            </mat-slider>
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'vaccineEfficacy'" [displayWith]="percentage"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="vaccineEfficacy">
+            </mat-slider>
+            
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'testingRate'"
+                [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="testingRate">
+            </mat-slider>
+    
+            <mat-checkbox *ngIf="currentConfig === 'displayAll'"
+                formControlName="displayAll">All
+            </mat-checkbox>
+            <mat-checkbox *ngIf="currentConfig === 'displayVaccinated'"
+                formControlName="displayVaccinated">Vaccinated
+            </mat-checkbox>
+            <mat-checkbox *ngIf="currentConfig === 'displayLock'"
+                formControlName="displayLock">Lockdown
+            </mat-checkbox>
+            <mat-checkbox *ngIf="currentConfig === 'displayGrid'"
+                formControlName="displayGrid">Grid
+            </mat-checkbox>
+        </div>
+    </div>
+    
+    <mat-divider class="flexGrow" *ngIf="currentConfig !== ''"></mat-divider>
+
+</form>

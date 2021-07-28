@@ -1,0 +1,36 @@
+<div class="flexWrap flexGrow justifyCenter padBg">
+    
+    <div class="flexWrap flexNone marginBtmMd small">
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral">Population: {{ ps.personList.length }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorHealthy">Healthy: {{ sts.currentHealthy }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorAsymptomatic">Asymptomatic: {{ sts.currentAsymptomaticInfection }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorMild">Mild: {{ sts.currentMildInfection }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorSevere">Severe: {{ sts.currentSevereInfection }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorCritical" [style.color]="'white'">Critical: {{ sts.currentCriticalInfection }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorDeath" [style.color]="'white'">Dying: {{ sts.currentDeathInfection }}</div>
+    </div>
+
+    <div class="flexGrow"></div>
+
+    <div class="flexWrap flexNone marginBtmMd small">
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral">
+            Lockdown: 
+            {{ sts.currentLockdownLvl3 / ps.personList.length | percent }} 
+            {{ sts.currentLockdownLvl2 / ps.personList.length | percent }} 
+            {{ sts.currentLockdownLvl1 / ps.personList.length | percent }}
+        </div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral">
+            Vaccinated: 
+            {{ sts.currentVaccinated / ps.personList.length | percent }}
+        </div>
+    </div>
+
+    <div class="flexGrow"></div>
+
+    <div class="flexNone marginBtmMd">
+        <button type="button" mat-stroked-button (click)="refresh()">Refresh <mat-icon>autorenew</mat-icon></button>
+    </div>
+
+    <mat-divider class="flexGrow"></mat-divider>
+
+</div>

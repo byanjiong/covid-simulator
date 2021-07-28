@@ -1,0 +1,13 @@
+<div class="flexWrap flexGrow justifyCenter relative">
+    <canvas #myCanvas></canvas>
+    <div class="fullOverlay">
+        <div class="flexNone mat-title muted">
+            Day: {{ sts.challengeDaysPassed }}
+        </div>
+    </div>
+    <div class="fullOverlay" style="z-index: -1;">
+        <div class="flexWrap flexGrow justifyCenter">
+            <canvas #myCanvasOverlay></canvas>
+        </div>
+    </div>
+</div>

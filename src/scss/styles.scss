@@ -1,0 +1,210 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.hide {
+    display: none;
+}
+
+.small {
+    font-size: smaller;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.warn {
+    color: Red;
+}
+.muted {
+    color:gray;
+}
+.padTy {
+    padding: 2px;
+}
+
+.padMd {
+    padding: 4px;
+}
+
+.padBg {
+    padding: 8px;
+}
+
+.marginBtmTy {
+    margin-bottom: 8px;
+}
+
+.marginBtmMd {
+    margin-bottom: 16px;
+}
+
+.flexColumn {
+    display: flex;
+    flex-flow: column nowrap;
+    // justify-content: flex-start;
+    // align-content: stretch;
+    .flexGap { margin-bottom: 16px; }
+    .flexGapSm { margin-bottom: 8px; }
+    .flexGapTy { margin-bottom: 4px; }
+}
+
+.flexWrap {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+
+    
+    &.alignStart { align-content: flex-start; }
+    &.alignItemCenter { align-items: center; }
+    &.alignCenter { align-content: center; } // vertical alignment middle
+    &.justifyCenter { justify-content: center; } // horizontal alignment middle
+    .flexGap { margin-right: 16px; }
+    .flexGapSm { margin-right: 8px; }
+    .flexGapTy { margin-right: 4px; }
+}
+
+// .flexWrapCenter {
+//     display: flex;
+//     // flex-flow: column wrap;
+//     flex-flow: row wrap;
+//     justify-content: center;
+//     align-items: center;
+//     align-content: center;
+//     .flexGap { margin-bottom: 16px; }
+//     .flexGapSm { margin-bottom: 8px; }
+//     .flexGapTy { margin-bottom: 4px; }
+// }
+
+
+
+
+.flexGrow { flex: 1 1 100%; }
+.flexInitial { flex: 0 1 auto; }
+.flexAuto {
+    flex: 1 1 0;
+    .mat-form-field-infix {
+        width: auto;
+    }
+}
+.flexNone { flex: 0 0 auto; }
+.flexNoGrow { flex: 0 1 auto; }
+.flexNoShrink { flex: 1 0 auto; }
+
+.flex3 {
+    flex: 0 0 30%;
+    .mat-form-field-infix {
+        width: auto;
+    }
+}
+
+.flex50 {
+    flex: 0 0 50%;
+    .mat-form-field-infix {
+        width: auto;
+    }
+}
+
+.flex100 {
+    flex: 0 0 100%;
+    .mat-form-field-infix {
+        width: auto;
+    }
+}
+.flexTy {
+    flex: 0 0 50px;
+    .mat-form-field-infix {
+        width: auto;
+    }
+}
+.flexSm {
+    flex: 0 0 80px;
+    .mat-form-field-infix {
+        width: auto;
+    }
+}
+.flexMd {
+    .mat-form-field-infix {
+        width: auto;
+    }
+    flex: 0 0 160px;
+}
+.flexIndent {
+    flex: 0 0 20px;
+    .mat-form-field-infix {
+        width: auto;
+    }
+}
+
+.flexMat1x { // double width of material input element
+    flex: 0 0 180px;
+    .mat-form-field-infix {
+        width: 180px;
+    }
+}
+
+
+.flexMat2x { // double width of material input element
+    flex: 0 0 360px;
+    .mat-form-field-infix {
+        width: 360px;
+    }
+}
+
+
+.optColumn0 { width: 100%; }
+.optColumn1 { width: 100%; }
+.optColumn2 { width: 50%; }
+.optColumn3 { width: 33%; }
+.optColumn4 { width: 25%; }
+
+
+.fullWidth {
+    width: 100%;
+}
+.fullHeight {
+    height: 100%;
+}
+// region: aspect-ratio support
+//Usage: (example)
+//      <div style="--aRatio:815/419;"></div>
+//      <div style="--aRatio:16:9;"></div>
+//      <div style="--aRatio:1.4;"></div>
+
+
+
+
+
+
+
+.fullOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.relative {
+    position: relative;
+}
+
+@-o-keyframes fadeIt {
+0%   { background-color: #FFFFFF; }
+50%  { background-color: pink; }
+100% { background-color: #FFFFFF; }
+}
+@keyframes fadeIt {
+0%   { background-color: #FFFFFF; }
+50%  { background-color: pink; }
+100% { background-color: #FFFFFF; }
+}
+  
+.backgroundAnimated{    
+    // background-image:none !important; 
+    -o-animation: fadeIt 2s ease-in-out; 
+    animation: fadeIt 2s ease-in-out; 
+}
+  

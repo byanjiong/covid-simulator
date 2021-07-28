@@ -1,0 +1,42 @@
+<div class="flexWrap flexGrow justifyCenter padBg">
+    <mat-divider class="flexGrow"></mat-divider>
+
+    <div class="marginBtmMd"></div>
+
+    <ngx-charts-line-chart
+        [view]="sts.chart1.view"
+        [scheme]="sts.chart1.colorScheme"
+        [legend]="sts.chart1.legend"
+        [showXAxisLabel]="sts.chart1.showXAxisLabel"
+        [showYAxisLabel]="sts.chart1.showYAxisLabel"
+        [xAxis]="sts.chart1.xAxis"
+        [yAxis]="sts.chart1.yAxis"
+        [xAxisLabel]="sts.chart1.xAxisLabel"
+        [yAxisLabel]="sts.chart1.yAxisLabel"
+        [timeline]="sts.chart1.timeline"
+        [results]="sts.chart1.data">
+    </ngx-charts-line-chart>
+        <!-- (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)" -->
+
+    <div class="flexGrow marginBtmMd"></div>
+
+    <ngx-charts-line-chart
+        [view]="sts.chart2.view"
+        [scheme]="sts.chart2.colorScheme"
+        [legend]="sts.chart2.legend"
+        [showXAxisLabel]="sts.chart2.showXAxisLabel"
+        [showYAxisLabel]="sts.chart2.showYAxisLabel"
+        [xAxis]="sts.chart2.xAxis"
+        [yAxis]="sts.chart2.yAxis"
+        [xAxisLabel]="sts.chart2.xAxisLabel"
+        [yAxisLabel]="sts.chart2.yAxisLabel"
+        [timeline]="sts.chart2.timeline"
+        [yScaleMin]="0"
+        [yScaleMax]="100"
+        [results]="sts.chart2.data">
+    </ngx-charts-line-chart>
+
+</div>
+
