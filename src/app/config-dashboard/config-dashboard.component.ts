@@ -70,11 +70,12 @@ export class ConfigDashboardComponent implements OnInit {
             ...defaultVal,
             ...config
         };
-        this.cfgf.resolveOtherConfigVariables();
-        this.cfgf.configForm.setValue(outConfig);
 
-        this.clrs.emitControllerAction(ControllerAction.Reset);
-        this.sts.emitStatistic(StatisticChange.Reset);
+        this.cfgf.resolveOtherConfigVariables();
+        
+        this.cfgf.configForm.patchValue(outConfig);
+        // this.clrs.emitControllerAction(ControllerAction.Reset);
+        // this.sts.emitStatistic(StatisticChange.Reset);
     }
 
     onSubmit() {

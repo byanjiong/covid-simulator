@@ -78,9 +78,9 @@ export class StatisticService {
     currentSevereInfection = 0;
     currentCriticalInfection = 0;
     currentDeathInfection = 0;
-    currentLockdownLvl3 = 0;
-    currentLockdownLvl2 = 0;
-    currentLockdownLvl1 = 0;
+    currentQuarantineLvl3 = 0;
+    currentQuarantineLvl2 = 0;
+    currentQuarantineLvl1 = 0;
     currentVaccinated = 0;
 
     // temporarily accumulate data
@@ -135,9 +135,9 @@ export class StatisticService {
         this.currentSevereInfection = 0;
         this.currentCriticalInfection = 0;
         this.currentDeathInfection = 0;
-        this.currentLockdownLvl3 = 0;
-        this.currentLockdownLvl2 = 0;
-        this.currentLockdownLvl1 = 0;
+        this.currentQuarantineLvl3 = 0;
+        this.currentQuarantineLvl2 = 0;
+        this.currentQuarantineLvl1 = 0;
         this.currentVaccinated = 0;
     }
 
@@ -311,22 +311,25 @@ export class StatisticService {
                     break;
                 }
             }
-            if (p.lock > this.cfg._lockdownThresholdLvl3) {
-                this.currentLockdownLvl3++;
-            } else if (p.lock > this.cfg._lockdownThresholdLvl2) {
-                this.currentLockdownLvl2++;
-            } else if (p.lock > this.cfg._lockdownThresholdLvl1) {
-                this.currentLockdownLvl1++;
+            if (p.lock > this.cfg._quarantineThresholdLvl3) {
+                this.currentQuarantineLvl3++;
+            } else if (p.lock > this.cfg._quarantineThresholdLvl2) {
+                this.currentQuarantineLvl2++;
+            } else if (p.lock > this.cfg._quarantineThresholdLvl1) {
+                this.currentQuarantineLvl1++;
             }
             if (p.vaccinated) {
                 this.currentVaccinated++;
             }
         });
         if (this.currentInfection === 0) {
-            if (! this.challengeWin) {
-                this.msgs.open(`Congrats, all Covid-19 cases have been cleared. 😋`);
+            if (this.challengeDaysPassed > 2) {
+                if (! this.challengeWin) {
+                    this.msgs.open(`Congrats, all Covid-19 cases have been cleared. 😋`);
+                }
+                this.challengeWin = true;
             }
-            this.challengeWin = true;
+            
         }
     }
 

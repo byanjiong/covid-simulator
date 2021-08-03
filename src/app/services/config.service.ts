@@ -58,18 +58,18 @@ export class ConfigService {
     _gridStrokeWidth = 2;
 
     // misc
-    _lockdownBehaviorChangeRate = 0.5; // the higher the value, then more people will change their lockdown value every round
-    _lockdownEfficacy = 0.99; // % reduce in infection for lockdown person vs no lockdown
-    _lockdownThresholdLvl3 = 0.9;
-    _lockdownThresholdLvl2 = 0.75;
-    _lockdownThresholdLvl1 = 0.6;
+    _quarantineBehaviorChangeRate = 0.5; // the higher the value, then more people will change their quarantine value every round
+    _quarantineEfficacy = 0.99; // % reduce in infection for quarantine person vs no quarantine
+    _quarantineThresholdLvl3 = 0.9;
+    _quarantineThresholdLvl2 = 0.6;
+    _quarantineThresholdLvl1 = 0.3;
     
     _unknownSickSelfQuarantineDayDelay = 3; // day
     _unknownSickSeekTestingDayDelay = 3; // day
     _unknownSickSeekTestingWillingness = 0.5; // 0 - 1
 
     _testingValidForDay = 5; // day
-    _testedPatientReduceInfectionToOthers = 0.95;
+    _testedPatientReduceInfectionToOthers = 0.5;
 
     _AsymptomaticSickDays = 14; // day
     _MildSickDays = 20; // day

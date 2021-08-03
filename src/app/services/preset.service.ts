@@ -40,7 +40,7 @@ export class PresetService {
             }
         },
         {
-            name: 'Lockdown',
+            name: 'Quarantine',
             config: {
                 row: 11,
                 column: 22,

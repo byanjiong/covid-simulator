@@ -38,9 +38,10 @@ export class SimulatorService {
         this.ctxOverlay = ctx;
     }
 
-
     
-      
+
+
+
     start() {
         if (this.timerSubscription) {
             if (! this.timerSubscription.closed) {
@@ -60,7 +61,6 @@ export class SimulatorService {
         );
     
         this.timerSubscription = source.subscribe(count => {
-            // console.log(count);
         });
     }
 
@@ -97,7 +97,7 @@ export class SimulatorService {
             // recovery
             this.ps.listRecoveryManager(this.ctxOverlay);
 
-            // lockdown
+            // quarantine
             this.ps.listLockManager(this.ctxOverlay);
             
             // statistic and charts

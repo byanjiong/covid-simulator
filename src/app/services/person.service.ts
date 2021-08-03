@@ -147,11 +147,11 @@ export class PersonService {
         ctx.lineWidth = this.cfg.padding;
         if (this.cfg.displayLock) {
             let alpha = 0;
-            if (person.lock > this.cfg._lockdownThresholdLvl3) {
+            if (person.lock > this.cfg._quarantineThresholdLvl3) {
                 alpha = 1;
-            } else if (person.lock > this.cfg._lockdownThresholdLvl2) {
+            } else if (person.lock > this.cfg._quarantineThresholdLvl2) {
                 alpha = 0.6
-            } else if (person.lock > this.cfg._lockdownThresholdLvl1) {
+            } else if (person.lock > this.cfg._quarantineThresholdLvl1) {
                 alpha = 0.3;
             }
             if (alpha > 0) {
@@ -428,10 +428,11 @@ export class PersonService {
         const me = this.getRandomPerson();
         me.isMe = true;
 
+        this.listCreateLocate();
         this.listApplyInitialInfection();
         this.listApplyTest();
-        this.listCreateLocate();
         this.listCreateVaccinated();
+        this.listApplyLock();
     }
 //++
     private listCreateLocate() {
@@ -579,7 +580,7 @@ export class PersonService {
         // const rand = Math.random();
         this.personList.forEach(p => {
             this.personChangeLock(p);
-            // if (this.cfg._lockdownBehaviorChangeRate > rand) { // not appropriate to use random here
+            // if (this.cfg._quarantineBehaviorChangeRate > rand) { // not appropriate to use random here
             //     this.personChangeLock(p);
             // }
         });

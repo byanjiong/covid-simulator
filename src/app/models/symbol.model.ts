@@ -42,7 +42,7 @@ export enum SymbolColor {
 
     // border
     Vaccine = '#448aff',
-    Lockdown = '#7c4dff',
+    Quarantine = '#7c4dff',
     Testing = '#ffab40',
 
     // stat

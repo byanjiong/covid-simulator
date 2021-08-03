@@ -141,7 +141,7 @@
 
 
         <mat-list dense class="flexMd padMd">
-            <h3 matSubheader>Display</h3>
+            <h3 matSubheader>Show</h3>
             <mat-list-item (click)="showConfig('displayAll')" [ngClass]="{active: currentConfig === 'displayAll'}">
                 <div class="flexWrap flexGrow">
                     <div class="flexNone mat-input">Unknown</div>
@@ -158,7 +158,7 @@
             </mat-list-item>
             <mat-list-item (click)="showConfig('displayLock')" [ngClass]="{active: currentConfig === 'displayLock'}">
                 <div class="flexWrap flexGrow">
-                    <div class="flexNone mat-input">Lockdown</div>
+                    <div class="flexNone mat-input">Quarantine</div>
                     <div class="flexAuto"></div>
                     <div class="flexNone mat-input accent">{{ cfg.displayLock? '✓':'✕' }}</div>
                 </div>
@@ -232,7 +232,7 @@
                 formControlName="displayVaccinated">Vaccinated
             </mat-checkbox>
             <mat-checkbox *ngIf="currentConfig === 'displayLock'"
-                formControlName="displayLock">Lockdown
+                formControlName="displayLock">Quarantine
             </mat-checkbox>
             <mat-checkbox *ngIf="currentConfig === 'displayGrid'"
                 formControlName="displayGrid">Grid

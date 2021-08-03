@@ -52,7 +52,7 @@ export class DrawService {
 
         const offset = this.cfg.padding;
         const w = this.cfg.symbolSize - 2 * offset;
-        this.ctxSymbol1.strokeStyle = SymbolColor.Lockdown;
+        this.ctxSymbol1.strokeStyle = SymbolColor.Quarantine;
         this.ctxSymbol1.strokeRect(offset, offset, w, w);
     }
 

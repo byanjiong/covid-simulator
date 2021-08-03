@@ -80,16 +80,16 @@ export class CovidService {
             }
         }
 
-        // lockdown
+        // quarantine
         const rand1 = Math.random();
         if (origin.lock > rand1) {
-            rate *= (1 - this.cfg._lockdownEfficacy * origin.lock);
+            rate *= (1 - this.cfg._quarantineEfficacy * origin.lock);
         }
         if (target.lock > rand1) {
-            rate *= (1 - this.cfg._lockdownEfficacy * target.lock);
+            rate *= (1 - this.cfg._quarantineEfficacy * target.lock);
         }
 
-        // test
+        // test (will warn others)
         if (origin.tested) {
             rate *= this.cfg._testedPatientReduceInfectionToOthers;
         }

@@ -20,7 +20,7 @@ export class DialogHelpComponent implements OnInit {
     colorCritical = SymbolColor.Critical;
     colorDeath = SymbolColor.Dead;
 
-    colorLockdown = SymbolColor.Lockdown;
+    colorQuarantine = SymbolColor.Quarantine;
     colorVaccine = SymbolColor.Vaccine;
     colorTesting = SymbolColor.Testing;
     

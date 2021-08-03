@@ -58,6 +58,7 @@ export class CanvasViewerComponent implements OnInit {
                 }
                 case ControllerAction.Reset: {
                     this.initViewer();
+                    this.ps.listDraw(this.ctxOverlay);
                     break;
                 }
                 case ControllerAction.DrawGrid: {

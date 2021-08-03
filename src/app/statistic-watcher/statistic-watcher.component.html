@@ -14,10 +14,10 @@
 
     <div class="flexWrap flexNone marginBtmMd small">
         <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral">
-            Lockdown: 
-            {{ sts.currentLockdownLvl3 / ps.personList.length | percent }} 
-            {{ sts.currentLockdownLvl2 / ps.personList.length | percent }} 
-            {{ sts.currentLockdownLvl1 / ps.personList.length | percent }}
+            Quarantine: 
+            {{ sts.currentQuarantineLvl3 / ps.personList.length | percent }} 
+            {{ sts.currentQuarantineLvl2 / ps.personList.length | percent }} 
+            {{ sts.currentQuarantineLvl1 / ps.personList.length | percent }}
         </div>
         <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral">
             Vaccinated: 
