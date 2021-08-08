@@ -10,4 +10,4 @@ This is an open source project, everyone is welcomed to contribute.
 
 This project is written in Angular environment.
 
-Made with LOVE by ~me~ ^_^ 
+Made with LOVE by me ^_^ 
