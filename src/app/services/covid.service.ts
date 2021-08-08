@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { randomInteger } from "../helper/functions";
 import { Person, PersonCondition, PersonStatus } from "../models/person.model";
 import { ConfigService } from "./config.service";
 
@@ -15,21 +16,22 @@ export class CovidService {
 
 
     getInfectionCounter(condition: PersonCondition) {
+        const offset = randomInteger(-3, 3);
         switch (condition) {
             case PersonCondition.Asymptomatic: {
-                return this.cfg._AsymptomaticSickDays;
+                return this.cfg._AsymptomaticSickDays + offset;
             }
             case PersonCondition.Mild: {
-                return this.cfg._MildSickDays;
+                return this.cfg._MildSickDays + offset;
             }
             case PersonCondition.Severe: {
-                return this.cfg._SevereSickDays;
+                return this.cfg._SevereSickDays + offset;
             }
             case PersonCondition.Critical: {
-                return this.cfg._CriticalSickDays;
+                return this.cfg._CriticalSickDays + offset;
             }
             case PersonCondition.Dying: {
-                return this.cfg._DyingSickDays;
+                return this.cfg._DyingSickDays + offset;
             }
             default: { // healthy
                 return 0;
@@ -63,11 +65,11 @@ export class CovidService {
         let rate: number = 0;
         switch (origin.condition) {
             case PersonCondition.Asymptomatic: {
-                rate = this.cfg.infectionRate * 0.2;
+                rate = this.cfg.infectionRate * 0.5;
                 break;
             }
             case PersonCondition.Mild: {
-                rate = this.cfg.infectionRate * 0.8;
+                rate = this.cfg.infectionRate * 0.9;
                 break;
             }
             case PersonCondition.Severe: {
@@ -89,16 +91,11 @@ export class CovidService {
             rate *= (1 - this.cfg._quarantineEfficacy * target.lock);
         }
 
-        // test (will warn others)
-        if (origin.tested) {
-            rate *= this.cfg._testedPatientReduceInfectionToOthers;
-        }
-
         // vaccine & anti-body
         if (target.vaccinated) {
             rate *= (1 - this.cfg.vaccineEfficacy);
         } else if (target.history > 0) {
-            rate *= (1 - this.cfg.vaccineEfficacy * 0.8);
+            rate *= (1 - this.cfg._antibodyEfficacy);
         }
 
         const rand2 = Math.random();

@@ -31,6 +31,7 @@ export class ConfigService {
     // disease
     infectionRate: number; // 0 - 1, how easy a person will be infected
     recoverRate: number;
+    incubationPeriod: number; // day
 
     // intervention - movement
     region: number; // 1 - 6
@@ -65,17 +66,21 @@ export class ConfigService {
     _quarantineThresholdLvl1 = 0.3;
     
     _unknownSickSelfQuarantineDayDelay = 3; // day
-    _unknownSickSeekTestingDayDelay = 3; // day
+    
     _unknownSickSeekTestingWillingness = 0.5; // 0 - 1
 
     _testingValidForDay = 5; // day
-    _testedPatientReduceInfectionToOthers = 0.5;
+
+    _antibodyEfficacy = 0.65;
 
     _AsymptomaticSickDays = 14; // day
     _MildSickDays = 20; // day
     _SevereSickDays = 40; // day
     _CriticalSickDays = 60; // day
     _DyingSickDays = 30; // day
+
+    // animation
+    _chartAnimationDelay = 1000; // ms
 
     setValue(config: Partial<ConfigService>) {
         Object.keys(config).forEach(name => {
@@ -94,8 +99,8 @@ export class ConfigService {
     getDefault() {
         const cfg: Partial<ConfigService> = {
             // environment
-            // row: 3,
-            // column: 4,
+            // row: 5,
+            // column: 8,
 
             row: 16,
             column: 20,
@@ -110,6 +115,7 @@ export class ConfigService {
             // disease
             infectionRate: 0.2,
             recoverRate: 20,
+            incubationPeriod: 6,
 
             // intervention - movement
             region: 1,

@@ -2,17 +2,37 @@
     
     <div class="flexWrap flexNone marginBtmMd small">
         <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral">Population: {{ ps.personList.length }}</div>
-        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorHealthy">Healthy: {{ sts.currentHealthy }}</div>
-        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorAsymptomatic">Asymptomatic: {{ sts.currentAsymptomaticInfection }}</div>
-        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorMild">Mild: {{ sts.currentMildInfection }}</div>
-        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorSevere">Severe: {{ sts.currentSevereInfection }}</div>
-        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorCritical" [style.color]="'white'">Critical: {{ sts.currentCriticalInfection }}</div>
-        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorDeath" [style.color]="'white'">Dying: {{ sts.currentDeathInfection }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorHealthy">Healthy: {{ ps.personList.length -  sts.statAsymptomatic[0] - sts.statMild[0] - sts.statSevere[0] - sts.statCritical[0] - sts.statDying[0] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorAsymptomatic">Asymptomatic: {{ sts.statAsymptomatic[0] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorMild">Mild: {{ sts.statMild[0] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorSevere">Severe: {{ sts.statSevere[0] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorCritical" [style.color]="'white'">Critical: {{ sts.statCritical[0] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorDeath" [style.color]="'white'">Dying: {{ sts.statDying[0] }}</div>
     </div>
 
     <div class="flexGrow"></div>
 
+    <div class="flexWrap flexNone marginBtmMd small" *ngIf="showTestedData">
+        <div class="flexNone padTy flexGapTy bold">Testing data: →</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorAsymptomatic">Asymptomatic: {{ sts.statAsymptomatic[1] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorMild">Mild: {{ sts.statMild[1] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorSevere">Severe: {{ sts.statSevere[1] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorCritical" [style.color]="'white'">Critical: {{ sts.statCritical[1] }}</div>
+        <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorDeath" [style.color]="'white'">Dying: {{ sts.statDying[1] }}</div>
+    </div>
+
+    <div class="flexGrow"></div>
+
+
+
     <div class="flexWrap flexNone marginBtmMd small">
+        <ng-container *ngIf="(sts.statAsymptomatic[0] + sts.statMild[0] + sts.statSevere[0] + sts.statCritical[0] + sts.statDying[0]) / ps.personList.length as infected">
+            <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral" [ngClass]="{'warn bold': infected > 0.5}">
+                Infected: 
+                {{  infected | percent }} 
+            </div>    
+        </ng-container>
+        
         <div class="flexNone padTy flexGapTy" [style.backgroundColor]="colorGeneral">
             Quarantine: 
             {{ sts.currentQuarantineLvl3 / ps.personList.length | percent }} 
@@ -27,8 +47,9 @@
 
     <div class="flexGrow"></div>
 
-    <div class="flexNone marginBtmMd">
-        <button type="button" mat-stroked-button (click)="refresh()">Refresh <mat-icon>autorenew</mat-icon></button>
+    <div class="flexWrap flexNone marginBtmMd">
+        <button type="button" class="flexNone flexGap" mat-stroked-button (click)="toggleTested()"><mat-icon>insert_comment</mat-icon></button>
+        <button type="button" class="flexNone" mat-stroked-button (click)="refresh()">Refresh <mat-icon>autorenew</mat-icon></button>
     </div>
 
     <mat-divider class="flexGrow"></mat-divider>

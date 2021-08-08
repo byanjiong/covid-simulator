@@ -30,6 +30,7 @@ export class SimulatorService {
     ) {}
 
     timerSubscription: Subscription;
+    simulatorStart = false;
     simCounter = 0;
 
     ctxOverlay: CanvasRenderingContext2D;
@@ -43,11 +44,16 @@ export class SimulatorService {
 
 
     start() {
+        // stop other unrelated animation if have
+        this.as.stopAnimateChart();
+
+        // start
         if (this.timerSubscription) {
             if (! this.timerSubscription.closed) {
                 return;
             }
         }
+        this.simulatorStart = true;
 
         // daily activity
         this.cfg._maxActivityPerDay = 2 * this.ps.personList.length;
@@ -55,7 +61,10 @@ export class SimulatorService {
         const source = forkJoin([
             timer(this.cfg.animationSpeed),
             // timer(1000),
-            defer(() => this.simulation())
+            defer(() => {
+                this.simulation();
+                return of(0); // just return any observable
+            })
         ]).pipe(
             repeat(),
         );
@@ -65,6 +74,7 @@ export class SimulatorService {
     }
 
     stop() {
+        this.simulatorStart = false;
         if (this.timerSubscription) {
             this.timerSubscription.unsubscribe();
         }
@@ -90,7 +100,9 @@ export class SimulatorService {
         this.simCounter++;
         if (this.simCounter > this.cfg._maxActivityPerDay) {
             this.simCounter = 0;
+            this.sts.challengeDaysPassed++;
             this.ps.customListReset();
+
             // testing
             this.ps.listTestingManager(this.ctxOverlay);
 
@@ -100,12 +112,11 @@ export class SimulatorService {
             // quarantine
             this.ps.listLockManager(this.ctxOverlay);
             
+            
+
             // statistic and charts
             this.sts.plotGraph(this.ps.personList);
             this.clrs.emitControllerAction(ControllerAction.Ready);
-            
         }
-
-        return of(0); // just return any observable
     }
 }

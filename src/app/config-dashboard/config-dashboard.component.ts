@@ -114,6 +114,7 @@ export class ConfigDashboardComponent implements OnInit {
     }
 
     percentage(value: number) {
+        console.log(value);
         return `${value * 100}%`
     }
 }

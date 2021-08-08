@@ -119,13 +119,13 @@ export class PresetService {
         {
             name: 'Real world',
             config: {
-                row: 50,
-                column: 80,
+                row: 70,
+                column: 90,
                 symbolSize: 8,
                 animationSpeed: 0,
                 populationDensity: 0.3,
                 initialInfectionRate: 0.2,
-                region: 5,
+                region: 2,
                 quarantineStrictness: 0.4,
                 vaccinationRate: 0.4,
                 testingRate: 0.1,

@@ -81,7 +81,7 @@ export class CanvasViewerComponent implements OnInit {
 
         this.rs.init(this.ctx);
         this.ps.init(this.ctxOverlay);
-        this.sts.resetStat(this.ps.personList);
+        this.sts.resetAll(this.ps.personList);
         this.clrs.emitControllerAction(ControllerAction.Ready);
     }
 

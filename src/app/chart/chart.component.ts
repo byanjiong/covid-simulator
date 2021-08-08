@@ -1,7 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Subscription } from 'rxjs';
+import { AnimateService } from '../services/animate.service';
 import { ControllerService } from '../services/controller.service';
+import { SimulatorService } from '../services/simulator.service';
 import { StatisticService } from '../services/statistic.service';
 
 @Component({
@@ -15,12 +17,15 @@ export class ChartComponent implements OnInit {
     constructor(
         public sts: StatisticService,
         private clrs: ControllerService,
+        public ans: AnimateService,
+        public sims: SimulatorService,
         private cd: ChangeDetectorRef
     ) {
     }
 
     private statisticSubscription: Subscription;
     private controllerActionSubscription: Subscription;
+    isStop = true;
     
     ngOnInit(): void {
         this.statisticSubscription = this.sts.statisticChanged$.subscribe(data => {
@@ -48,5 +53,14 @@ export class ChartComponent implements OnInit {
         // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
     }
 
+    animateChartStart() {
+        this.isStop = false;
+        this.ans.startAnimateChart();
+    }
+
+    animateChartStop() {
+        this.isStop = true;
+        this.ans.stopAnimateChart();
+    }
 }
 

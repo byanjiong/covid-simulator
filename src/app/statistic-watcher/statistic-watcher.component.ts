@@ -30,6 +30,8 @@ export class StatisticWatcherComponent implements OnInit {
     colorCritical = SymbolColor.Critical;
     colorDeath = SymbolColor.Dead;
 
+    showTestedData = false;
+
     private controllerActionSubscription: Subscription;
 
     ngOnInit(): void {
@@ -37,7 +39,7 @@ export class StatisticWatcherComponent implements OnInit {
             switch(a) {
                 case ControllerAction.Stop: 
                 case ControllerAction.Ready: {
-                    this.sts.getCurrentPersonListStat(this.ps.personList);
+                    this.sts.refreshStat(this.ps.personList);
                     this.cd.markForCheck();
                     break;
                 }
@@ -51,7 +53,11 @@ export class StatisticWatcherComponent implements OnInit {
     }
 
     refresh() {
-        this.sts.getCurrentPersonListStat(this.ps.personList);
+        this.sts.refreshStat(this.ps.personList);
+    }
+
+    toggleTested() {
+        this.showTestedData = ! this.showTestedData;
     }
 
     debug() {

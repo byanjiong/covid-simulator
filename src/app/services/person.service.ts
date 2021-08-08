@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { randomNumber, valueWithin } from "../helper/functions";
+import { randomInteger, randomNumber, valueWithin } from "../helper/functions";
 import { Person, PersonCondition, PersonStatus } from "../models/person.model";
 import { regionColorPicker, SymbolColor } from "../models/symbol.model";
 import { ConfigService } from "./config.service";
@@ -23,7 +23,7 @@ export class PersonService {
     ) {
         this.sts.statisticChanged$.subscribe(type => {
             if (type === StatisticChange.Reset) {
-                this.sts.resetStat(this.personList);
+                this.sts.resetAll(this.personList);
             }
         });
     }
@@ -74,7 +74,7 @@ export class PersonService {
         return p;
     }
 
-//++
+
     personMove(ctx: CanvasRenderingContext2D, person: Person) {
         // return if not willing to move
         const rand = Math.random();
@@ -170,12 +170,12 @@ export class PersonService {
             ctx.drawImage(this.ds.ctxSymbol4.canvas, person.x * this.cfg.symbolSize, person.y * this.cfg.symbolSize);
         }
     }
-//++
+
     getRandomPerson() {
         const person = this.personList[Math.floor(Math.random()*this.personList.length)];
         return person;
     }
-//++
+
     getNextInfectedPersonIndex() {
         if (! this.personList.length) {
             this.infectedPersonLoopIndex = -1;
@@ -207,7 +207,7 @@ export class PersonService {
             return;
         }
     }
-//++
+
     personChangeSickness(person: Person) {
         const condition = this.cs.getDiseaseCondition();
         const counter = this.cs.getInfectionCounter(condition);
@@ -219,20 +219,17 @@ export class PersonService {
             person.status = PersonStatus.Unknown;
             person.tested = 0;
         }
-
-        // this.personChangeLock(person);
-        this.sts.updateTempInfectionStat(condition);
     }
-//++
+
     personChangeRecovery(person: Person) {
+        // change
         person.condition = PersonCondition.Healthy;
         person.history = person.history++;
 
         this.personChangeLock(person);
 
-        this.sts.tempNewRecovery++;
     }
-//++
+
     personIsWillingToSeekTest(person: Person) {
         // if (person.tested) {
         //     return false;
@@ -270,7 +267,8 @@ export class PersonService {
                 }
             }
             const rand2 = Math.random();
-            if (person.counter < defaultSickDayLength - this.cfg._unknownSickSeekTestingDayDelay) {   
+            const offset = randomInteger(-2, 2);
+            if (person.counter < defaultSickDayLength - this.cfg.incubationPeriod + offset) {   
                 if (this.cfg._unknownSickSeekTestingWillingness > rand2) {
                     return true;
                 }
@@ -279,7 +277,7 @@ export class PersonService {
 
         return false;
     }
-//++
+
     personChangeTested(person: Person) {
         person.status = PersonStatus.Known;
         if (person.condition === PersonCondition.Healthy) {
@@ -287,14 +285,12 @@ export class PersonService {
         } else {
             person.tested = person.counter;
             this.personChangeLock(person);
-            this.sts.tempNewTestPositive++;
         }
-        this.sts.tempNewTest++;
     }
 
 
 
-//++
+
     personChangeLock(person: Person) {
         let lock1 = 0;
         let lock2 = 0;
@@ -314,7 +310,9 @@ export class PersonService {
                     lock1 = randomNumber(min, 1);
                     break;
                 }
-                case PersonCondition.Severe: {
+                case PersonCondition.Severe:
+                case PersonCondition.Critical:
+                case PersonCondition.Dying: {
                     const min = Math.max(this.cfg.quarantineStrictness - minOffset, 0.97);
                     lock1 = randomNumber(min, 1);
                     break;
@@ -393,7 +391,7 @@ export class PersonService {
         return false;
     }
 
-//++
+
     private getMoveDirection(x: number, y: number): number[] {
         // get a list of empty space to move
         const validDirection: number[][] = [ [x, y] ]; // stay at the same location is always a valid move
@@ -417,7 +415,7 @@ export class PersonService {
         return final;
     }
 
-//++
+
     private listCreate() {
         const maxPeople = Math.floor(this.cfg.row * this.cfg.column * this.cfg.populationDensity);
         for (let i = 0; i < maxPeople; i++) {
@@ -434,7 +432,7 @@ export class PersonService {
         this.listCreateVaccinated();
         this.listApplyLock();
     }
-//++
+
     private listCreateLocate() {
         let personIdx = 0;
         for (let j = 0; j < this.cfg.row; j++) {
@@ -528,6 +526,8 @@ export class PersonService {
     }
 
     listTestingManager(ctx: CanvasRenderingContext2D) {
+        this.sts.currentTestTotal = 0;
+        this.sts.currentTestPositive = 0;
         this.personList.forEach(p => {
             let redraw = false;
             // reduce tested counter
@@ -542,8 +542,12 @@ export class PersonService {
                 // handling new test
                 const isWilling = this.personIsWillingToSeekTest(p);
                 if (isWilling) {
+                    this.sts.currentTestTotal++;
                     this.personChangeTested(p);
                     redraw = true;
+                    if (p.condition !== PersonCondition.Healthy) {
+                        this.sts.currentTestPositive++;
+                    }
                 }
             }
 
@@ -556,21 +560,29 @@ export class PersonService {
 
     listRecoveryManager(ctx: CanvasRenderingContext2D) {
         this.personList.forEach(p => {
-            if (p.condition !== PersonCondition.Healthy) {
-                p.counter--;
-                if (p.counter  === 0) {
-                    if (p.condition === PersonCondition.Dying) {
-                        this.personRemoveDead(ctx, p);
-                    } else {
-                        this.personChangeRecovery(p);
-                        this.customListAdd(p);
+            if (p.counter > 0) {
+                if (p.condition === PersonCondition.Healthy) {
+                    console.warn(`expect healthy person counter = 0`);
+                } else {
+                    if (p.counter  === 1) {
+                        if (p.condition === PersonCondition.Dying) {
+                            this.personRemoveDead(ctx, p);
+                        } else {
+                            this.personChangeRecovery(p);
+                            this.customListAdd(p);
+                        }
                     }
+                    p.counter--;
+                }
+            } else {
+                if (p.condition !== PersonCondition.Healthy) {
+                    console.warn(`expect sick person to have a conter`);
                 }
             }
         });
     }
 
-//++
+
     listLockManager(ctx: CanvasRenderingContext2D) {
         this.listApplyLock();
         this.listDraw(ctx);

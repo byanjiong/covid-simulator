@@ -14,6 +14,8 @@
         [xAxisLabel]="sts.chart1.xAxisLabel"
         [yAxisLabel]="sts.chart1.yAxisLabel"
         [timeline]="sts.chart1.timeline"
+        [yScaleMin]="0"
+        [yScaleMax]="sts.chartCasesYMax"
         [results]="sts.chart1.data">
     </ngx-charts-line-chart>
         <!-- (select)="onSelect($event)"
@@ -23,6 +25,22 @@
     <div class="flexGrow marginBtmMd"></div>
 
     <ngx-charts-line-chart
+        [view]="sts.chart5.view"
+        [scheme]="sts.chart5.colorScheme"
+        [legend]="sts.chart5.legend"
+        [showXAxisLabel]="sts.chart5.showXAxisLabel"
+        [showYAxisLabel]="sts.chart5.showYAxisLabel"
+        [xAxis]="sts.chart5.xAxis"
+        [yAxis]="sts.chart5.yAxis"
+        [xAxisLabel]="sts.chart5.xAxisLabel"
+        [yAxisLabel]="sts.chart5.yAxisLabel"
+        [timeline]="sts.chart5.timeline"
+        [results]="sts.chart5.data">
+    </ngx-charts-line-chart>
+
+    <div class="flexGrow marginBtmMd"></div>
+
+    <ngx-charts-area-chart-stacked
         [view]="sts.chart2.view"
         [scheme]="sts.chart2.colorScheme"
         [legend]="sts.chart2.legend"
@@ -34,9 +52,51 @@
         [yAxisLabel]="sts.chart2.yAxisLabel"
         [timeline]="sts.chart2.timeline"
         [yScaleMin]="0"
-        [yScaleMax]="100"
+        [yScaleMax]="sts.chartCasesYMax"
         [results]="sts.chart2.data">
+    </ngx-charts-area-chart-stacked>
+
+    <div class="flexGrow marginBtmMd"></div>
+
+    <ngx-charts-area-chart-stacked
+        [view]="sts.chart3.view"
+        [scheme]="sts.chart3.colorScheme"
+        [legend]="sts.chart3.legend"
+        [showXAxisLabel]="sts.chart3.showXAxisLabel"
+        [showYAxisLabel]="sts.chart3.showYAxisLabel"
+        [xAxis]="sts.chart3.xAxis"
+        [yAxis]="sts.chart3.yAxis"
+        [xAxisLabel]="sts.chart3.xAxisLabel"
+        [yAxisLabel]="sts.chart3.yAxisLabel"
+        [timeline]="sts.chart3.timeline"
+        [yScaleMin]="0"
+        [yScaleMax]="sts.chartCasesYMax"
+        [results]="sts.chart3.data">
+    </ngx-charts-area-chart-stacked>
+
+    <div class="flexGrow marginBtmMd"></div>
+
+
+    <ngx-charts-line-chart
+        [view]="sts.chart4.view"
+        [scheme]="sts.chart4.colorScheme"
+        [legend]="sts.chart4.legend"
+        [showXAxisLabel]="sts.chart4.showXAxisLabel"
+        [showYAxisLabel]="sts.chart4.showYAxisLabel"
+        [xAxis]="sts.chart4.xAxis"
+        [yAxis]="sts.chart4.yAxis"
+        [xAxisLabel]="sts.chart4.xAxisLabel"
+        [yAxisLabel]="sts.chart4.yAxisLabel"
+        [timeline]="sts.chart4.timeline"
+        [yScaleMin]="0"
+        [yScaleMax]="100"
+        [results]="sts.chart4.data">
     </ngx-charts-line-chart>
 
+
+    <div class="flexWrap flexGrow">
+        <button type="button" class="flexNone flexGap" color="primary" mat-raised-button (click)="animateChartStart()" [disabled]="ans.chartAnimationStart || sims.simulatorStart">Animate chart <mat-icon>arrow_right</mat-icon></button>
+        <button type="button" class="flexNone flexGap" color="accent" mat-raised-button (click)="animateChartStop()" [disabled]="! ans.chartAnimationStart  || sims.simulatorStart">Stop</button>
+    </div>
 </div>
 

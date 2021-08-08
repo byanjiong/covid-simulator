@@ -95,6 +95,18 @@
                     <div class="flexNone mat-input accent">{{ cfg.recoverRate }}</div>
                 </div>
             </mat-list-item> -->
+            <mat-list-item (click)="showConfig('incubationPeriod')"  [ngClass]="{active: currentConfig === 'incubationPeriod'}">
+                <div class="flexWrap flexGrow">
+                    <div class="flexNone mat-input">Incubation period</div>
+                    <div class="flexAuto"></div>
+                    <div class="flexNone mat-input accent">{{ cfg.incubationPeriod }}</div>
+                </div>
+            </mat-list-item>
+
+
+
+
+
         </mat-list>
 
         <mat-list dense class="flexMd padMd">
@@ -206,7 +218,11 @@
             <mat-slider class="flexGrow" *ngIf="currentConfig === 'recoverRate'"
                 [max]="1" [min]="0" [step]="0.01" [thumbLabel]="true" formControlName="recoverRate">
             </mat-slider>
-    
+            <mat-slider class="flexGrow" *ngIf="currentConfig === 'incubationPeriod'"
+                [max]="14" [min]="1" [step]="1" [thumbLabel]="true" formControlName="incubationPeriod">
+            </mat-slider>
+
+
             <mat-slider class="flexGrow" *ngIf="currentConfig === 'region'"
                 [max]="6" [min]="1" [step]="1" [thumbLabel]="true" formControlName="region">
             </mat-slider>
